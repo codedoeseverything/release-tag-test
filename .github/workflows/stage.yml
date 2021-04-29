@@ -19,7 +19,7 @@ jobs:
           tag_prefix: v
           release_branches: release
           create_annotated_tag: true
-          custom_release_rules: hotfix:patch,pre-feat:preminor,bug:patch:Bug Fixes,chore:patch:Chores
+          # custom_release_rules: hotfix:patch,pre-feat:preminor,bug:patch:Bug Fixes,chore:patch:Chores
           dry_run: false
       - name: Create a GitHub release
         uses: actions/create-release@v1
