@@ -108,7 +108,7 @@ jobs:
           MATRIX_CONTEXT: ${{ toJson(matrix) }} # required
         with:
           status: ${{ job.status }}
-          author_name: @${{ env.URL }}
+          author_name: "@${{ env.URL }}"
           mention: 'here'
           if_mention: failure,cancelled
           job_name: report # Match the name above.
