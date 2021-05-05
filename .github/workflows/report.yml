@@ -72,7 +72,6 @@ jobs:
 #  PYTHON MODULES INSTALL  
 ################################################
       - name: Install Python dependencies
-        if: steps.cache-python.outputs.cache-hit != 'true'
         run: |
           echo "Installing dependencies and caching them."
           pip install -r requirements.txt
