@@ -23,77 +23,77 @@ jobs:
     runs-on: ubuntu-latest
 
 
-# ################################################
-# #  GITHUB ACTIONS GLOBAL ENV VARIABLES  
-# ################################################
-#     env:
-#       REGION : ap-southeast-2
-#       ENV: sandbox
-#       AWS_Account: Beta
-#       Status: Deployed
-#       Timestamp: 12:30pm
-#       Endpoint: https://example.com
+################################################
+#  GITHUB ACTIONS GLOBAL ENV VARIABLES  
+################################################
+    env:
+      REGION : ap-southeast-2
+      ENV: sandbox
+      AWS_Account: Beta
+      Status: Deployed
+      Timestamp: 12:30pm
+      Endpoint: https://example.com
       
 
-# ################################################
-# #  GITHUB REPO CHECKOUT 
-# ################################################
-#     steps:
-#       - uses: actions/checkout@v2
-#         with:
-#           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+################################################
+#  GITHUB REPO CHECKOUT 
+################################################
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
 
 
-# ################################################
-# #  PYTHON ENV  
-# ################################################
-#       - name: Set up Python 3.6
-#         uses: actions/setup-python@v2
-#         with:
-#           python-version: 3.6
+################################################
+#  PYTHON ENV  
+################################################
+      - name: Set up Python 3.6
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.6
 
 
 
-# ################################################
-# #  PYTHON MODULES INSTALL  
-# ################################################
-#       - name: Install Python dependencies
-#         run: |
-#           echo "Installing dependencies and caching them."
-#           pip install --upgrade pip
-#           pip install --upgrade csvtotable
+################################################
+#  PYTHON MODULES INSTALL  
+################################################
+      - name: Install Python dependencies
+        run: |
+          echo "Installing dependencies and caching them."
+          pip install --upgrade pip
+          pip install --upgrade csvtotable
 
 
 
-# ###########################==5.3.1#####################
-# #  AWS CLI CONFIGURATION
-# ################################################ 
-#       - name: Configure AWS credentials from $STACK_NAME account in $REGION region
-#         uses: aws-actions/configure-aws-credentials@v1
-#         with:
-#           aws-access-key-id: ${{ secrets.DEVOPS_AWS_KEY }}
-#           aws-secret-access-key: ${{ secrets.DEVOPS_SECRET_KEY }}
-#           aws-region: ${{ env.REGION }}
+###########################==5.3.1#####################
+#  AWS CLI CONFIGURATION
+################################################ 
+      - name: Configure AWS credentials from $STACK_NAME account in $REGION region
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.DEVOPS_AWS_KEY }}
+          aws-secret-access-key: ${{ secrets.DEVOPS_SECRET_KEY }}
+          aws-region: ${{ env.REGION }}
 
 
-# ################################################
-# #  REPORTING
-# ################################################ 
-#       - name: Convert JSON format cloudformation tags for stack deployment
-#         run: |
-#           aws s3 cp s3://reporting123/${GITHUB_REPOSITORY##*/}.csv ${GITHUB_REPOSITORY##*/}.csv
-#           chmod +x ${GITHUB_REPOSITORY##*/}.csv
-#           DATE=$(date +%D)
-#           TIME=$(date +%T)
-#           REPORT=${GITHUB_REPOSITORY##*/},${GITHUB_REF##*/},${GITHUB_SHA:0:6},$GITHUB_ACTOR,$GITHUB_EVENT_NAME,$ENV,$AWS_Account,$Status,$DATE,$TIME,$Endpoint
-#           cat ${GITHUB_REPOSITORY##*/}.csv
-#           sed -i -e "2i$REPORT" ${GITHUB_REPOSITORY##*/}.csv
-#           cat ${GITHUB_REPOSITORY##*/}.csv
-#           aws s3 cp ${GITHUB_REPOSITORY##*/}.csv s3://reporting123/${GITHUB_REPOSITORY##*/}.csv --acl public-read-write
-#           csvtotable ${GITHUB_REPOSITORY##*/}.csv ${GITHUB_REPOSITORY##*/}.html
-#           aws s3 cp ${GITHUB_REPOSITORY##*/}.html s3://reporting123/${GITHUB_REPOSITORY##*/}.html --acl public-read-write
-#           echo "URL=https://reporting123.s3-ap-southeast-2.amazonaws.com/${GITHUB_REPOSITORY##*/}.html" >> $GITHUB_ENV 
+################################################
+#  REPORTING
+################################################ 
+      - name: Convert JSON format cloudformation tags for stack deployment
+        run: |
+          aws s3 cp s3://reporting123/${GITHUB_REPOSITORY##*/}.csv ${GITHUB_REPOSITORY##*/}.csv
+          chmod +x ${GITHUB_REPOSITORY##*/}.csv
+          DATE=$(date +%D)
+          TIME=$(date +%T)
+          REPORT=${GITHUB_REPOSITORY##*/},${GITHUB_REF##*/},${GITHUB_SHA:0:6},$GITHUB_ACTOR,$GITHUB_EVENT_NAME,$ENV,$AWS_Account,$Status,$DATE,$TIME,$Endpoint
+          cat ${GITHUB_REPOSITORY##*/}.csv
+          sed -i -e "2i$REPORT" ${GITHUB_REPOSITORY##*/}.csv
+          cat ${GITHUB_REPOSITORY##*/}.csv
+          aws s3 cp ${GITHUB_REPOSITORY##*/}.csv s3://reporting123/${GITHUB_REPOSITORY##*/}.csv --acl public-read-write
+          csvtotable ${GITHUB_REPOSITORY##*/}.csv ${GITHUB_REPOSITORY##*/}.html
+          aws s3 cp ${GITHUB_REPOSITORY##*/}.html s3://reporting123/${GITHUB_REPOSITORY##*/}.html --acl public-read-write
+          echo "URL=https://reporting123.s3-ap-southeast-2.amazonaws.com/${GITHUB_REPOSITORY##*/}.html" >> $GITHUB_ENV 
 
 
        
@@ -108,7 +108,7 @@ jobs:
           MATRIX_CONTEXT: ${{ toJson(matrix) }} # required
         with:
           status: ${{ job.status }}
-          author_name: "@${{ env.URL }}"
+          author_name: @${{ env.URL }}
           mention: 'here'
           if_mention: failure,cancelled
           job_name: report # Match the name above.
