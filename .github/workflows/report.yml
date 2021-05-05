@@ -60,16 +60,18 @@ jobs:
 ################################################ 
       - name: Convert JSON format cloudformation tags for stack deployment
         run: |
+          npm install csv2html -g
           aws s3 cp s3://reporting123/${GITHUB_REPOSITORY##*/}.csv ${GITHUB_REPOSITORY##*/}.csv
           chmod +x ${GITHUB_REPOSITORY##*/}.csv
-          # DATE=$(date +%D)
-          # TIME=$(date +%T)
-          # REPORT=${GITHUB_REPOSITORY##*/},${GITHUB_REF##*/},${GITHUB_SHA:0:6},$GITHUB_ACTOR,$GITHUB_EVENT_NAME,$ENV,$AWS_Account,$Status,$DATE,$TIME,$Endpoint
-          # cat ${GITHUB_REPOSITORY##*/}.csv
-          # sed -i -e "2i$REPORT" ${GITHUB_REPOSITORY##*/}.csv
-          # cat ${GITHUB_REPOSITORY##*/}.csv
-          # aws s3 cp ${GITHUB_REPOSITORY##*/}.csv s3://reporting123/${GITHUB_REPOSITORY##*/}.csv --acl public-read-write
-          csv2html -o ${GITHUB_REPOSITORY##*/}.html ${GITHUB_REPOSITORY##*/}.csv
+          DATE=$(date +%D)
+          TIME=$(date +%T)
+          REPORT=${GITHUB_REPOSITORY##*/},${GITHUB_REF##*/},${GITHUB_SHA:0:6},$GITHUB_ACTOR,$GITHUB_EVENT_NAME,$ENV,$AWS_Account,$Status,$DATE,$TIME,$Endpoint
+          cat ${GITHUB_REPOSITORY##*/}.csv
+          sed -i -e "2i$REPORT" ${GITHUB_REPOSITORY##*/}.csv
+          cat ${GITHUB_REPOSITORY##*/}.csv
+          aws s3 cp ${GITHUB_REPOSITORY##*/}.csv s3://reporting123/${GITHUB_REPOSITORY##*/}.csv --acl public-read-write
+          csv2html ${GITHUB_REPOSITORY##*/}.csv > ${GITHUB_REPOSITORY##*/}.html
+          aws s3 cp ${GITHUB_REPOSITORY##*/}.html s3://reporting123/${GITHUB_REPOSITORY##*/}.html --acl public-read-write
 
 
 
