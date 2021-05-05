@@ -48,24 +48,11 @@ jobs:
 ################################################
 #  PYTHON ENV  
 ################################################
-      - name: Set up Python 3.8
+      - name: Set up Python 3.6
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8
+          python-version: 3.6
 
-
-################################################
-#  PYTHON MODULES CACHE  
-################################################
-      - name: Cache Python dependencies
-        uses: actions/cache@v2
-        id: cache-python
-        with:
-          path: ${{ env.pythonLocation}}/lib/python3.8/site-packages/*
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-            ${{ runner.os }}-
 
 
 ################################################
@@ -74,7 +61,8 @@ jobs:
       - name: Install Python dependencies
         run: |
           echo "Installing dependencies and caching them."
-          pip install -r requirements.txt
+          pip install --upgrade pip
+          pip install --upgrade csvtotable
 
 
 
@@ -94,7 +82,6 @@ jobs:
 ################################################ 
       - name: Convert JSON format cloudformation tags for stack deployment
         run: |
-          pip install --upgrade csvtotable
           aws s3 cp s3://reporting123/${GITHUB_REPOSITORY##*/}.csv ${GITHUB_REPOSITORY##*/}.csv
           chmod +x ${GITHUB_REPOSITORY##*/}.csv
           DATE=$(date +%D)
@@ -106,10 +93,6 @@ jobs:
           aws s3 cp ${GITHUB_REPOSITORY##*/}.csv s3://reporting123/${GITHUB_REPOSITORY##*/}.csv --acl public-read-write
           csvtotable ${GITHUB_REPOSITORY##*/}.csv ${GITHUB_REPOSITORY##*/}.html
           aws s3 cp ${GITHUB_REPOSITORY##*/}.html s3://reporting123/${GITHUB_REPOSITORY##*/}.html --acl public-read-write
-
-
-
-          # python3 scripts/cfn-param-json-convert.py config/cfn.tags
 
 
        
