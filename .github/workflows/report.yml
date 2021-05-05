@@ -50,11 +50,10 @@ jobs:
         run: |
           DATE=$(date +%D)
           TIME=$(date +%T)
-          echo $GITHUB_REPOSITORY,$GITHUB_REF,$GITHUB_SHA,$GITHUB_ACTOR,$GITHUB_EVENT_NAME,$ENV,$AWS_Account,$Status,$DATE,$TIME,$Endpoint
- 
-          echo "After------------------------>"  
-  
           echo ${GITHUB_REPOSITORY##*/},${GITHUB_REF##*/},${GITHUB_SHA:0:6},$GITHUB_ACTOR,$GITHUB_EVENT_NAME,$ENV,$AWS_Account,$Status,$DATE,$TIME,$Endpoint
+          cat AllDetails.csv
+          sed -i '1 i\anything' AllDetails.scv
+          cat AllDetails.csv
 
 
 
