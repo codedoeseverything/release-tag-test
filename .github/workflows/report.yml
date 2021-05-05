@@ -105,9 +105,10 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           MATRIX_CONTEXT: ${{ toJson(matrix) }} # required
+          FILENAME: ${GITHUB_REPOSITORY##*/}
         with:
           status: ${{ job.status }}
-          author_name: Refer "https://reporting123.s3-ap-southeast-2.amazonaws.com/${GITHUB_REPOSITORY##*/}.html"
+          author_name: Refer "https://reporting123.s3-ap-southeast-2.amazonaws.com/$FILENAME.html"
           mention: 'here'
           if_mention: failure,cancelled
           job_name: report # Match the name above.
