@@ -93,6 +93,7 @@ jobs:
           aws s3 cp ${GITHUB_REPOSITORY##*/}.csv s3://reporting123/${GITHUB_REPOSITORY##*/}.csv --acl public-read-write
           csvtotable ${GITHUB_REPOSITORY##*/}.csv ${GITHUB_REPOSITORY##*/}.html
           aws s3 cp ${GITHUB_REPOSITORY##*/}.html s3://reporting123/${GITHUB_REPOSITORY##*/}.html --acl public-read-write
+          echo "FILENAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
 
 
        
@@ -105,10 +106,9 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           MATRIX_CONTEXT: ${{ toJson(matrix) }} # required
-          FILENAME: ${GITHUB_REPOSITORY##*/}
         with:
           status: ${{ job.status }}
-          author_name: Refer "https://reporting123.s3-ap-southeast-2.amazonaws.com/$FILENAME.html"
+          author_name: Refer "https://reporting123.s3-ap-southeast-2.amazonaws.com/${{ env.FILENAME }}.html"
           mention: 'here'
           if_mention: failure,cancelled
           job_name: report # Match the name above.
