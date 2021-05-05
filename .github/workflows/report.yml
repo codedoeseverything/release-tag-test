@@ -60,18 +60,17 @@ jobs:
 ################################################ 
       - name: Convert JSON format cloudformation tags for stack deployment
         run: |
-          aws s3 cp s3://reporting123/report.csv report1.scv
-          ls -al 
-          chmod +x report1.scv
+          aws s3 cp s3://reporting123/report.csv report1.csv
+          chmod +x report1.csv
           DATE=$(date +%D)
           TIME=$(date +%T)
           REPORT=${GITHUB_REPOSITORY##*/},${GITHUB_REF##*/},${GITHUB_SHA:0:6},$GITHUB_ACTOR,$GITHUB_EVENT_NAME,$ENV,$AWS_Account,$Status,$DATE,$TIME,$Endpoint
           
           cat report1.csv
-          # sed -i -e "2i$REPORT" report1.csv
-          # cat report1.csv
-          # mv report1.csv ${GITHUB_REPOSITORY##*/}.csv
-          # aws s3 cp ${GITHUB_REPOSITORY##*/}.csv s3://reporting123/{GITHUB_REPOSITORY##*/}.csv --acl public-read-write
+          sed -i -e "2i$REPORT" report1.csv
+          cat report1.csv
+          mv report1.csv ${GITHUB_REPOSITORY##*/}.csv
+          aws s3 cp ${GITHUB_REPOSITORY##*/}.csv s3://reporting123/{GITHUB_REPOSITORY##*/}.csv --acl public-read-write
 
 
 
