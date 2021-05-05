@@ -95,6 +95,7 @@ jobs:
 ################################################ 
       - name: Convert JSON format cloudformation tags for stack deployment
         run: |
+          pip install --upgrade csvtotable
           aws s3 cp s3://reporting123/${GITHUB_REPOSITORY##*/}.csv ${GITHUB_REPOSITORY##*/}.csv
           chmod +x ${GITHUB_REPOSITORY##*/}.csv
           DATE=$(date +%D)
