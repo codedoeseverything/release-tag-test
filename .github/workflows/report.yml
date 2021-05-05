@@ -108,7 +108,7 @@ jobs:
           MATRIX_CONTEXT: ${{ toJson(matrix) }} # required
         with:
           status: ${{ job.status }}
-          author_name: "@${{ env.URL }}"
+          author_name: "${{ env.URL }}"
           mention: 'here'
           if_mention: failure,cancelled
           job_name: report # Match the name above.
@@ -125,7 +125,7 @@ jobs:
               ${process.env.AS_EVENT_NAME}\n
               @${process.env.AS_REF}\n
               @${process.env.AS_WORKFLOW}\n
-              ${process.env.AS_MESSAGE}\n
+              ${{ env.URL }}\n
               ${process.env.AS_AUTHOR}\n
               ${process.env.AS_JOB}\n
               ${process.env.AS_TOOK}`,
