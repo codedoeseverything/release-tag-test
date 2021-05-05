@@ -93,7 +93,8 @@ jobs:
           aws s3 cp ${GITHUB_REPOSITORY##*/}.csv s3://reporting123/${GITHUB_REPOSITORY##*/}.csv --acl public-read-write
           csvtotable ${GITHUB_REPOSITORY##*/}.csv ${GITHUB_REPOSITORY##*/}.html
           aws s3 cp ${GITHUB_REPOSITORY##*/}.html s3://reporting123/${GITHUB_REPOSITORY##*/}.html --acl public-read-write
-          echo "FILENAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
+          echo "URL=https://reporting123.s3-ap-southeast-2.amazonaws.com/${GITHUB_REPOSITORY##*/}.html" >> $GITHUB_ENV
+        
 
 
        
@@ -108,11 +109,11 @@ jobs:
           MATRIX_CONTEXT: ${{ toJson(matrix) }} # required
         with:
           status: ${{ job.status }}
-          author_name: Refer "https://reporting123.s3-ap-southeast-2.amazonaws.com/${{ env.FILENAME }}.html"
+          author_name: Refer "${{ env.URL }}"
           mention: 'here'
           if_mention: failure,cancelled
           job_name: report # Match the name above.
-          fields: repo,commit,eventName,ref,workflow,message,author,job,took
+          fields: repo,commit,eventName,ref,workflow,message,author,job,took,report
           custom_payload: |
             {
             username: 'GitHub Action CI WorkFlow',
@@ -128,6 +129,8 @@ jobs:
               ${process.env.AS_MESSAGE}\n
               ${process.env.AS_AUTHOR}\n
               ${process.env.AS_JOB}\n
-              ${process.env.AS_TOOK}`,
+              ${process.env.AS_TOOK}\n
+              ${{ env.URL }}`,
+
             }]
             }
