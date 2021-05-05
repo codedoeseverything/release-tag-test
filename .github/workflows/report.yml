@@ -125,9 +125,25 @@ jobs:
               ${process.env.AS_EVENT_NAME}\n
               @${process.env.AS_REF}\n
               @${process.env.AS_WORKFLOW}\n
-              ${{ env.URL }}\n
+              ${process.env.AS_MESSAGE}\n
               ${process.env.AS_AUTHOR}\n
               ${process.env.AS_JOB}\n
               ${process.env.AS_TOOK}`,
             }]
             }
+
+
+
+################################################
+#  REPORTING
+################################################ 
+      - name: Convert JSON format cloudformation tags for stack deployment
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"${{ env.URL }}"}' ${{ secrets.SLACK_WEBHOOK_URL }}
+ 
+
+
+
+
+
+
