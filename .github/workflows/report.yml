@@ -48,11 +48,14 @@ jobs:
 ################################################ 
       - name: Convert JSON format cloudformation tags for stack deployment
         run: |
-          
-          echo $GITHUB_REPOSITORY,$GITHUB_REF,$GITHUB_SHA,$GITHUB_ACTOR,$GITHUB_EVENT_NAME,$ENV,$AWS_Account,$Status,$Timestamp,$Endpoint
+          DATE=$(date +%D)
+          TIME=$(date +%T)
+          echo $GITHUB_REPOSITORY,$GITHUB_REF,$GITHUB_SHA,$GITHUB_ACTOR,$GITHUB_EVENT_NAME,$ENV,$AWS_Account,$Status,$DATE,$TIME,$Endpoint
  
           echo "After------------------------>"  
-          echo ${GITHUB_REPOSITORY##*/},${GITHUB_REF##*/},${GITHUB_SHA:0:6},$GITHUB_ACTOR,$GITHUB_EVENT_NAME,$ENV,$AWS_Account,$Status,$Timestamp,$Endpoint
+  
+          echo ${GITHUB_REPOSITORY##*/},${GITHUB_REF##*/},${GITHUB_SHA:0:6},$GITHUB_ACTOR,$GITHUB_EVENT_NAME,$ENV,$AWS_Account,$Status,$DATE,$TIME,$Endpoint
+
 
 
           # python3 scripts/cfn-param-json-convert.py config/cfn.tags
