@@ -133,21 +133,18 @@ jobs:
             {
               text: "Deployment Notification",
               attachments: [{
-                "author_name": "8398a7@action-slack", // json
+                "author_name": ${process.env.AS_REPO}, // json
                 fallback: 'fallback',
                 color: 'good',
                 title: 'Deployment status report',
                 text: 'https://reporting123.s3-ap-southeast-2.amazonaws.com/release-tag-test.html',
                 fields: [
                   {
-                  title: '  ',
-                  value: '  '
-                },
-                {
-                  title: 'All Practera repo deployment status overview',
-                  value: 'https://reporting123.s3-ap-southeast-2.amazonaws.com/release-tag-test.html'
-                }],
+                    title: 'All Practera repo deployment status overview',
+                    value: 'https://reporting123.s3-ap-southeast-2.amazonaws.com/release-tag-test.html'
+                  }],
                 "image_url": "https://practera.com/wp-content/uploads/2020/11/Practera-logo-2.svg",
+                "thumb_url": "https://practera.com/wp-content/uploads/2020/11/Practera-logo-2.svg",
                 actions: [{
                 }]
               }]
