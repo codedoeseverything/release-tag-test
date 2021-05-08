@@ -18,7 +18,7 @@ aws s3 ls s3://$STATUSREPORTS3Bucket | awk '{print $4}' | grep ${GITHUB_REPOSITO
 if [ $? == 0 ]
 then
   echo ${GITHUB_REPOSITORY##*/}".csv already exist..!! Download existing one to modify"
-  aws s3 cp s3://reporting123/sample.csv ${GITHUB_REPOSITORY##*/}.csv
+  aws s3 cp s3://reporting123/${GITHUB_REPOSITORY##*/}.csv ${GITHUB_REPOSITORY##*/}.csv
 else
   echo ${GITHUB_REPOSITORY##*/}".csv doesn't exist..!! Sample csv download to modify"
   aws s3 cp s3://reporting123/sample.csv ${GITHUB_REPOSITORY##*/}.csv
