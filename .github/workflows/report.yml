@@ -121,9 +121,10 @@ jobs:
 # ################################################
 # #  REPORTING
 # ################################################ 
-#       - name: Convert JSON format cloudformation tags for stack deployment
-#         run: |
-#           curl -X POST -H 'Content-type: application/json' --data '{"text":"${{ env.URL }}"}' ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Convert JSON format cloudformation tags for stack deployment
+        run: |
+          URL=https://reporting123.s3-ap-southeast-2.amazonaws.com/release-tag-test.html
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"$URL"}' ${{ secrets.SLACK_WEBHOOK_URL }}
  
 
 
