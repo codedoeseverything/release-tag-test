@@ -129,7 +129,7 @@ jobs:
           status: custom
           custom_payload: |
             {
-              text: "Deployment Report for $GITHUB_REPOSITORY,
+              text: "Deployment Report for,
               attachments: [{
                 "author_name": "8398a7@action-slack", // json
                 fallback: 'fallback',
@@ -139,8 +139,6 @@ jobs:
                 {
                   title: 'Overall depployment status',
                   value: 'https://reporting123.s3-ap-southeast-2.amazonaws.com/release-tag-test.html',
-                }],
-                actions: [{
                 }]
               }]
             }
