@@ -134,7 +134,7 @@ jobs:
                 "author_name": "8398a7@action-slack", // json
                 fallback: 'fallback',
                 color: 'good',
-                title: 'Deployment Report',
+                title: '${{ env.GITHUB_REPOSITORY }} deployment status report',
                 text: 'https://reporting123.s3-ap-southeast-2.amazonaws.com/release-tag-test.html',
                 fields: [{
                   title: 'lower case',
