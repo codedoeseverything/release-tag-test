@@ -129,16 +129,29 @@ jobs:
           status: custom
           custom_payload: |
             {
-              text: "Deployment Report for,
+              text: "Custom Field Check",
               attachments: [{
                 "author_name": "8398a7@action-slack", // json
                 fallback: 'fallback',
                 color: 'good',
-                title: 'Deployment Report Link',
+                title: 'Deployment Report',
                 text: 'https://reporting123.s3-ap-southeast-2.amazonaws.com/release-tag-test.html',
+                fields: [{
+                  title: 'lower case',
+                  value: 'LOWER CASE CHECK'.toLowerCase(),
+                  short: true
+                },
                 {
-                  title: 'Overall depployment status',
-                  value: 'https://reporting123.s3-ap-southeast-2.amazonaws.com/release-tag-test.html',
+                  title: 'reverse',
+                  value: 'gnirts esrever'.split('').reverse().join(''),
+                  short: true
+                },
+                {
+                  title: 'long title1',
+                  value: 'long value1',
+                  short: false
+                }],
+                actions: [{
                 }]
               }]
             }
