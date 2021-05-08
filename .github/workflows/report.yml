@@ -29,6 +29,7 @@ jobs:
     env:
       REGION : ap-southeast-2
       STATUSREPORTS3Bucket: reporting123
+      STATUS: DEPLOYED
 
 ################################################
 #  GITHUB REPO CHECKOUT 
@@ -87,7 +88,8 @@ jobs:
         if: ${{ failure() }}
         run: |
           echo "STATUS=FAILURE" >> $GITHUB_ENV
-       
+
+          
 # ################################################
 # #  DEVOPS-DEPLOYMENT REPORT
 # ################################################ 
@@ -97,8 +99,7 @@ jobs:
           pip install --upgrade pip
           pip install --upgrade csvtotable
           chmod +x deploy-reporting.sh && ./deploy-reporting.sh
-        env:
-          STATUS: DEPLOYED
+
 
 
        
