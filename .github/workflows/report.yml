@@ -61,15 +61,15 @@ jobs:
 
 
 
-# ###########################==5.3.1#####################
-# #  AWS CLI CONFIGURATION
-# ################################################ 
-#       - name: Configure AWS credentials from $STACK_NAME account in $REGION region
-#         uses: aws-actions/configure-aws-credentials@v1
-#         with:
-#           aws-access-key-id: ${{ secrets.DEVOPS_AWS_KEY }}
-#           aws-secret-access-key: ${{ secrets.DEVOPS_SECRET_KEY }}
-#           aws-region: ${{ env.REGION }}
+###########################==5.3.1#####################
+#  AWS CLI CONFIGURATION
+################################################ 
+      - name: Configure AWS credentials from $STACK_NAME account in $REGION region
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.DEVOPS_AWS_KEY }}
+          aws-secret-access-key: ${{ secrets.DEVOPS_SECRET_KEY }}
+          aws-region: ${{ env.REGION }}
 
 ################################################
 #  DEVOPS-DEPLOYMENT REPORT
@@ -124,30 +124,30 @@ jobs:
 # ##########################################################
 # #  SLACK NOTIFICATION
 # ##########################################################  
-      # - name: Slack Notification
-      #   if: always() # Pick up events even if the job fails or is canceled.
-      #   uses: 8398a7/action-slack@v3
-      #   with:
-      #     status: custom
-      #     custom_payload: |
-      #       {
-      #         text: "Deployment Notification",
-      #         attachments: [{
-      #           "author_name": ${process.env.AS_REPO}, // json
-      #           fallback: 'fallback',
-      #           color: 'good',
-      #           title: 'Deployment status report',
-      #           text: 'https://reporting123.s3-ap-southeast-2.amazonaws.com/release-tag-test.html',
-      #           fields: [
-      #             {
-      #               title: 'All Practera repo deployment status overview',
-      #               value: 'https://reporting123.s3-ap-southeast-2.amazonaws.com/release-tag-test.html'
-      #             }],
-      #           "image_url": "https://practera.com/wp-content/uploads/2020/11/Practera-logo-2.svg",
-      #           "thumb_url": "https://practera.com/wp-content/uploads/2020/11/Practera-logo-2.svg",
-      #           actions: [{
-      #           }]
-      #         }]
-      #       }
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+      - name: Slack Notification
+        if: always() # Pick up events even if the job fails or is canceled.
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              text: "Deployment Notification",
+              attachments: [{
+                "author_name": ${process.env.AS_REPO}, // json
+                fallback: 'fallback',
+                color: 'good',
+                title: 'Deployment status report',
+                text: 'https://reporting123.s3-ap-southeast-2.amazonaws.com/release-tag-test.html',
+                fields: [
+                  {
+                    title: 'All Practera repo deployment status overview',
+                    value: 'https://reporting123.s3-ap-southeast-2.amazonaws.com/release-tag-test.html'
+                  }],
+                "image_url": "https://practera.com/wp-content/uploads/2020/11/Practera-logo-2.svg",
+                "thumb_url": "https://practera.com/wp-content/uploads/2020/11/Practera-logo-2.svg",
+                actions: [{
+                }]
+              }]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
