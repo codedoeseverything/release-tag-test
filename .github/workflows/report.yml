@@ -64,21 +64,39 @@ jobs:
 # ###########################==5.3.1#####################
 # #  AWS CLI CONFIGURATION
 # ################################################ 
-#       - name: Configure AWS credentials from $STACK_NAME account in $REGION region
-#         uses: aws-actions/configure-aws-credentials@v1
-#         with:
-#           aws-access-key-id: ${{ secrets.DEVOPS_AWS_KEY }}
-#           aws-secret-access-key: ${{ secrets.DEVOPS_SECRET_KEY }}
-#           aws-region: ${{ env.REGION }}
+      - name: Configure AWS credentials from $STACK_NAME account in $REGION region
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.DEVOPS_AWS_KEY }}
+          aws-secret-access-key: ${{ secrets.DEVOPS_SECRET_KEY }}
+          aws-region: ${{ env.REGION }}
+
+
+# ################################################
+# #  STATUS VARIABLE UPDATE
+# ################################################ 
+      - name: Deployment status variable update
+        if: ${{ success() }}
+        run: |
+          echo "STATUS=DEPLOYED" >> $GITHUB_ENV
+        if: ${{ cancelled() }}
+        run: |
+          echo "STATUS=CANCELLED" >> $GITHUB_ENV
+        if: ${{ failure() }}
+        run: |
+          echo "STATUS=FAILURE" >> $GITHUB_ENV
+        if: ${{ always() }}
+        run: |
+          echo "STATUS is: "$STATUS
 
 # ################################################
 # #  DEVOPS-DEPLOYMENT REPORT
 # ################################################ 
-#       - name: DevOps Deployment Reporting 
-#         run: |
-#           pip install --upgrade pip
-#           pip install --upgrade csvtotable
-#           chmod +x deploy-reporting.sh && ./deploy-reporting.sh
+      - name: DevOps Deployment Reporting 
+        run: |
+          pip install --upgrade pip
+          pip install --upgrade csvtotable
+          chmod +x deploy-reporting.sh && ./deploy-reporting.sh
 
 
        

@@ -6,7 +6,6 @@ STATUSREPORTS3Bucket=reporting123  #Remove later
 GITHUB_REPOSITORY=codedoeseverything/release-tag-test #Remove later
 ENV=sandbox #Remove later
 AWS_ID=P1-SANDBOX #Remove later
-STATUS=Deployed #Remove later
 GITHUB_REF=refs/heads/main #Remove later
 GITHUB_SHA=21586d92266fd93d223f1f612dde75b7a60a6f66 #Remove later
 GITHUB_ACTOR=codedoeseverything
