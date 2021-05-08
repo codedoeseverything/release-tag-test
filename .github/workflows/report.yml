@@ -129,15 +129,15 @@ jobs:
           status: custom
           custom_payload: |
             {
-              text: "Custom Field Check",
+              text: "Deployment Notification",
               attachments: [{
                 "author_name": "8398a7@action-slack", // json
                 fallback: 'fallback',
                 color: 'good',
-                title: ' deployment status report',
+                title: 'Deployment status report',
                 text: 'https://reporting123.s3-ap-southeast-2.amazonaws.com/release-tag-test.html',
                 fields: [{
-                  title: 'Practera repo deployment status overview',
+                  title: 'All Practera repo deployment status overview',
                   value: 'https://reporting123.s3-ap-southeast-2.amazonaws.com/release-tag-test.html'
                 }],
                 actions: [{
