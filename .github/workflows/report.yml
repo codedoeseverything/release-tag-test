@@ -137,8 +137,21 @@ jobs:
                 title: '${{ env.GITHUB_REPOSITORY }} deployment status report',
                 text: 'https://reporting123.s3-ap-southeast-2.amazonaws.com/release-tag-test.html',
                 fields: [{
-                  title: 'Overall deployment status report',
-                  value: 'https://reporting123.s3-ap-southeast-2.amazonaws.com/release-tag-test.html
+                  title: 'lower case',
+                  value: 'LOWER CASE CHECK'.toLowerCase(),
+                  short: true
+                },
+                {
+                  title: 'reverse',
+                  value: 'gnirts esrever'.split('').reverse().join(''),
+                  short: true
+                },
+                {
+                  title: 'long title1',
+                  value: 'long value1',
+                  short: false
+                }],
+                actions: [{
                 }]
               }]
             }
