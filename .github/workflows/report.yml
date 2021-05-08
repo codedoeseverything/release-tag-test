@@ -40,81 +40,81 @@ jobs:
 
 
 
-# ################################################
-# #  PYTHON ENV  
-# ################################################
-#       - name: Set up Python 3.6
-#         uses: actions/setup-python@v2
+# # ################################################
+# # #  PYTHON ENV  
+# # ################################################
+# #       - name: Set up Python 3.6
+# #         uses: actions/setup-python@v2
+# #         with:
+# #           python-version: 3.6
+
+
+
+# # ################################################
+# # #  PYTHON MODULES INSTALL  
+# # ################################################
+# #       - name: Install Python dependencies
+# #         run: |
+# #           echo "Installing dependencies and caching them."
+# #           pip install --upgrade pip
+# #           pip install --upgrade csvtotable
+
+
+
+# ###########################==5.3.1#####################
+# #  AWS CLI CONFIGURATION
+# ################################################ 
+#       - name: Configure AWS credentials from $STACK_NAME account in $REGION region
+#         uses: aws-actions/configure-aws-credentials@v1
 #         with:
-#           python-version: 3.6
-
-
+#           aws-access-key-id: ${{ secrets.DEVOPS_AWS_KEY }}
+#           aws-secret-access-key: ${{ secrets.DEVOPS_SECRET_KEY }}
+#           aws-region: ${{ env.REGION }}
 
 # ################################################
-# #  PYTHON MODULES INSTALL  
-# ################################################
-#       - name: Install Python dependencies
+# #  DEVOPS-DEPLOYMENT REPORT
+# ################################################ 
+#       - name: DevOps Deployment Reporting 
 #         run: |
-#           echo "Installing dependencies and caching them."
 #           pip install --upgrade pip
 #           pip install --upgrade csvtotable
-
-
-
-###########################==5.3.1#####################
-#  AWS CLI CONFIGURATION
-################################################ 
-      - name: Configure AWS credentials from $STACK_NAME account in $REGION region
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.DEVOPS_AWS_KEY }}
-          aws-secret-access-key: ${{ secrets.DEVOPS_SECRET_KEY }}
-          aws-region: ${{ env.REGION }}
-
-################################################
-#  DEVOPS-DEPLOYMENT REPORT
-################################################ 
-      - name: DevOps Deployment Reporting 
-        run: |
-          pip install --upgrade pip
-          pip install --upgrade csvtotable
-          chmod +x deploy-reporting.sh && ./deploy-reporting.sh
+#           chmod +x deploy-reporting.sh && ./deploy-reporting.sh
 
        
-##########################################################
-#  SLACK NOTIFICATION
-##########################################################  
-      - name: Slack Notification
-        if: always() # Pick up events even if the job fails or is canceled.
-        uses: 8398a7/action-slack@v3
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          MATRIX_CONTEXT: ${{ toJson(matrix) }} # required
-        with:
-          status: ${{ job.status }}
-          author_name: "${{ env.URL }}"
-          mention: 'here'
-          if_mention: failure,cancelled
-          job_name: report # Match the name above.
-          fields: repo,commit,eventName,ref,workflow,message,author,job,took
-          custom_payload: |
-            {
-            username: 'GitHub Action CI WorkFlow',
-            icon_emoji: ':github:',
-            attachments: [{
-              color: '${{ job.status }}' === 'success' ? 'good' : ${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-              text:
-             `${process.env.AS_REPO}\n
-              ${process.env.AS_COMMIT}\n
-              ${process.env.AS_EVENT_NAME}\n
-              @${process.env.AS_REF}\n
-              @${process.env.AS_WORKFLOW}\n
-              ${process.env.AS_MESSAGE}\n
-              ${process.env.AS_AUTHOR}\n
-              ${process.env.AS_JOB}\n
-              ${process.env.AS_TOOK}`,
-            }]
-            }
+# ##########################################################
+# #  SLACK NOTIFICATION
+# ##########################################################  
+#       - name: Slack Notification
+#         if: always() # Pick up events even if the job fails or is canceled.
+#         uses: 8398a7/action-slack@v3
+#         env:
+#           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+#           MATRIX_CONTEXT: ${{ toJson(matrix) }} # required
+#         with:
+#           status: ${{ job.status }}
+#           author_name: "${{ env.URL }}"
+#           mention: 'here'
+#           if_mention: failure,cancelled
+#           job_name: report # Match the name above.
+#           fields: repo,commit,eventName,ref,workflow,message,author,job,took
+#           custom_payload: |
+#             {
+#             username: 'GitHub Action CI WorkFlow',
+#             icon_emoji: ':github:',
+#             attachments: [{
+#               color: '${{ job.status }}' === 'success' ? 'good' : ${{ job.status }}' === 'failure' ? 'danger' : 'warning',
+#               text:
+#              `${process.env.AS_REPO}\n
+#               ${process.env.AS_COMMIT}\n
+#               ${process.env.AS_EVENT_NAME}\n
+#               @${process.env.AS_REF}\n
+#               @${process.env.AS_WORKFLOW}\n
+#               ${process.env.AS_MESSAGE}\n
+#               ${process.env.AS_AUTHOR}\n
+#               ${process.env.AS_JOB}\n
+#               ${process.env.AS_TOOK}`,
+#             }]
+#             }
 
 
 
@@ -124,8 +124,8 @@ jobs:
       - name: Convert JSON format cloudformation tags for stack deployment
         run: |
           URL=https://reporting123.s3-ap-southeast-2.amazonaws.com/release-tag-test.html
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"$URL"}' ${{ secrets.SLACK_WEBHOOK_URL }}
- 
+          curl -X POST -H 'Content-type: application/json' --data '{"text":$URL}' ${{ secrets.SLACK_WEBHOOK_URL }}
+
 
 
 
