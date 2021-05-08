@@ -96,8 +96,8 @@ jobs:
           mention: 'here'
           if_mention: failure,cancelled
           job_name: report # Match the name above.
-          title: 'Deployment status report',
-          text: 'https://reporting123.s3-ap-southeast-2.amazonaws.com/release-tag-test.html',
+          title: 'Deployment status report'
+          text: 'https://reporting123.s3-ap-southeast-2.amazonaws.com/release-tag-test.html'
           fields: repo,commit,eventName,ref,workflow,message,author,job,took
           custom_payload: |
             {
