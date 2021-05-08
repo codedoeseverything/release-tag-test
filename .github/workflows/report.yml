@@ -76,27 +76,21 @@ jobs:
 # #  STATUS VARIABLE UPDATE
 # ################################################ 
       - name: Deployment status variable update
-        if: ${{ success() }}
-        run: |
-          echo "STATUS=DEPLOYED" >> $GITHUB_ENV
-        if: ${{ cancelled() }}
-        run: |
-          echo "STATUS=CANCELLED" >> $GITHUB_ENV
         if: ${{ failure() }}
         run: |
           echo "STATUS=FAILURE" >> $GITHUB_ENV
-        if: ${{ always() }}
-        run: |
-          echo "STATUS is: "$STATUS
-
+       
 # ################################################
 # #  DEVOPS-DEPLOYMENT REPORT
 # ################################################ 
-      - name: DevOps Deployment Reporting 
+      - name: DevOps Deployment Reporting
+        if: always()
         run: |
           pip install --upgrade pip
           pip install --upgrade csvtotable
           chmod +x deploy-reporting.sh && ./deploy-reporting.sh
+        env:
+          STATUS: DEPLOYED
 
 
        
